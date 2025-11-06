@@ -1,0 +1,86 @@
+/* CoursesSection.module.css */
+.section {
+  padding: 40px 20px;
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9f9;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 26px;
+  color: #216254;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 32px;
+}
+
+.cardsWrapper {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #fff;
+  width: 360px;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: right;
+}
+
+.image {
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #162818;
+  padding: 0 16px;
+}
+
+.cardText {
+  font-size: 14px;
+  color: #555;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.button {
+  background-color: #216254;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s ease;
+}
+.button:hover {
+  background-color: #1a4a3d; /* Darker shade for hover */
+}
+
