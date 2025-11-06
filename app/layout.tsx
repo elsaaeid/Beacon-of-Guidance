@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "منارة الهداية",
   description: "منارة الهداية - منصة تعليمية متخصصة في القرآن الكريم والعلوم الشرعية",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico'
+  }
 };
 
 export default function RootLayout({
