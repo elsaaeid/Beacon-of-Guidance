@@ -32,10 +32,8 @@ export default function Course3Page() {
             <p>الحصص: حصتان أو ثلاث حسب الخطة</p>
             <p>السعر: خطط متعددة حسب عدد الحصص</p>
             <div style={{ marginTop: 16 }}>
-              <Link href="/register">
-                <button className='button'>
-                  سجل الآن
-                </button>
+              <Link className='button' href="/register">
+                سجل الآن
               </Link>
             </div>
           </aside>

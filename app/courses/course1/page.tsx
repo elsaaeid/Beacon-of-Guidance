@@ -39,10 +39,8 @@ export default function Course1Page() {
               </ul>
 
               <div style={{ marginTop: 20 }}>
-                <Link href="/register" style={{ textDecoration: 'none' }}>
-                  <button className='button'>
+                <Link className='button' href="/register">
                     سجل الآن
-                  </button>
                 </Link>
               </div>
             </div>

@@ -31,10 +31,8 @@ export default function Course2Page() {
             <p>الحصص: ثلاث حصص أسبوعياً (60 دقيقة)</p>
             <p>السعر: تواصل معنا للحصول على الأسعار والخطط</p>
             <div style={{ marginTop: 16 }}>
-              <Link href="/register">
-                <button className='button'>
+              <Link className='button' href="/register">
                   سجل الآن
-                </button>
               </Link>
             </div>
             </aside>
