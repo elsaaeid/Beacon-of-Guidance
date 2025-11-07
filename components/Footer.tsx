@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link href="tel:01032372337" className={`${styles.contactItem} cursor-pointer`}>
+              <Link href="tel:01224925638" className={`${styles.contactItem} cursor-pointer`}>
                 <FiPhone className={styles.contactIcon} aria-hidden="true" />
                 <span>01224925638</span>
               </Link>
