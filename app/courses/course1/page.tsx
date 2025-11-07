@@ -40,7 +40,7 @@ export default function Course1Page() {
 
               <div style={{ marginTop: 20 }}>
                 <Link href="/register" style={{ textDecoration: 'none' }}>
-                  <button style={{ background: '#20563e', color: '#fff', padding: '10px 20px', borderRadius: 6, border: 'none', cursor: 'pointer' }}>
+                  <button className='button'>
                     سجل الآن
                   </button>
                 </Link>
