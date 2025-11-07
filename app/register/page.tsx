@@ -1,7 +1,7 @@
 "use client";
 // components/RegisterForm.tsx
 import React, { useState } from "react";
-import { FaInstagram, FaFacebookF, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 import '../../styles/register.css';
 
 const courses = [
@@ -53,9 +53,6 @@ const RegisterForm: React.FC = () => {
             </a>
             <a href="https://www.facebook.com/share/14U5UxgcJpV/" aria-label="Facebook" className="hover:text-gray-300">
               <FaFacebookF className="w-6 h-6" />
-            </a>
-            <a href="#" aria-label="Telegram" className="hover:text-gray-300">
-              <FaTelegramPlane className="w-6 h-6" />
             </a>
             <a href="https://wa.me/201032372337" aria-label="WhatsApp" className="hover:text-gray-300">
               <FaWhatsapp className="w-6 h-6" />
