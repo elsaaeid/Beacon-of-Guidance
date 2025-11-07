@@ -18,7 +18,7 @@ html {
 
 .button{
     background:var(--main-accent);
-    color:#fff;
+    color: var(--base-accent);
     padding: 10px;
     border-radius:6px;
     border:none;

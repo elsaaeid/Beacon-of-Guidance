@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 120px;
+  height: 110px;
   background-color: var(--base-accent);
   z-index: 1000;
 }
