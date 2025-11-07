@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import styles from '../styles/CookieBanner.module.css';
 
 const STORAGE_KEY = 'cookie_consent_v1';
 
@@ -36,8 +37,9 @@ export default function CookieBanner() {
       </div>
 
       <div className="flex gap-2">
-        <button onClick={accept} className="cursor-pointer bg-green-900 text-white px-4 py-2 rounded-md text-sm hover:bg-green-900">موافق</button>
-        <button onClick={dismiss} className="cursor-pointer bg-transparent border border-gray-300 text-gray-700 px-3 py-2 rounded-md text-sm">رفض</button>
+        <button onClick={accept} className={`cursor-pointer px-4 py-2 rounded-md text-sm ${styles.acceptBtn}`}
+        >موافق</button>
+        <button onClick={dismiss} className={`cursor-pointer border border-gray-300 text-gray-700 px-3 py-2 rounded-md text-sm ${styles.dismissBtn}`}>رفض</button>
       </div>
     </div>
   );

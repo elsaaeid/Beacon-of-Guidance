@@ -1,0 +1,16 @@
+.acceptBtn {
+    background-color: #1f4f43; /* Tailwind's green-600 */
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+.acceptBtn:hover {
+    background-color: #1a3f36; /* Tailwind's green-700 */
+}
+.dismissBtn {
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+.dismissBtn:hover {
+    background-color: #1f4f43; /* Tailwind's gray-100 */
+    color: #ffffff; /* Tailwind's green-600 */
+}
