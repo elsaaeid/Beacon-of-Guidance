@@ -1,6 +1,6 @@
 /* Footer.module.css */
 .footer {
-  background-color: #20563e;
+  background-color: var(--main-accent);
   color: #b7c0d3;
   direction: rtl;
   text-align: right;
@@ -14,12 +14,12 @@
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 2rem;
-  border-bottom: 1px solid #394264;
+  border-bottom: 1px solid var(--gray-color);
   padding-bottom: 2rem;
 }
 
 .title {
-  color: #ffffff;
+  color: var(--base-accent);
   font-weight: 600;
   margin-bottom: 0.75rem;
   font-size: 1.125rem;
@@ -41,7 +41,7 @@
 }
 
 .socialLink:hover {
-  color: #ffffff;
+  color: var(--base-accent);
 }
 
 .icon {
@@ -50,7 +50,7 @@
 }
 
 .subtitle {
-  color: #ffffff;
+  color: var(--base-accent);
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -68,7 +68,7 @@
 }
 
 .listItem:hover {
-  color: #ffffff;
+  color: var(--base-accent);
 }
 
 .contactList {
@@ -117,10 +117,10 @@
 }
 
 .bottomLink:hover {
-  color: #ffffff;
+  color: var(--base-accent);
 }
 .author {
-  color: #ffffff;
+  color: var(--base-accent);
   font-weight: bold;
 }
 

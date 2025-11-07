@@ -1,3 +1,3 @@
 .leftPanel {
-  background-color: #20563e; /* Tailwind's green-800 */
+  background-color: var(--main-accent); /* Tailwind's green-800 */
 }

@@ -1,6 +1,6 @@
 /* ]WhyChooseUs.module.css */
 .section {
-  background-color: #fff;
+  background-color: var(--base-accent);
   padding: 60px 20px;
   direction: rtl;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,7 +16,7 @@
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 12px;
-  color: #216254; /* Dark greenish color */
+  color: var(--main-accent); /* Dark greenish color */
 }
 
 .subtitle {

@@ -16,12 +16,12 @@
 .title {
   font-size: 1.5rem; /* 2xl */
   font-weight: 600;
-  color: #166534; /* green-800 */
+  color: var(--main-accent); /* green-800 */
   margin-bottom: 0.75rem; /* mb-3 */
 }
 
 .subtitle {
-  color: #4b5563; /* gray-600 */
+  color: var(--gray-color);
   font-size: 0.875rem; /* sm */
 }
 
@@ -38,7 +38,7 @@
 }
 
 .card {
-  background-color: #ffffff; /* white */
+  background-color: var(--base-accent); /* white */
   border-radius: 0.75rem; /* xl */
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
   padding: 1.5rem; /* p-6 */

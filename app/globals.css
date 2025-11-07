@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --base-accent: #ffffff;
+  --background: var(--base-accent);
   --foreground: #171717;
+  --gray-color: #6b7280; /* approx Tailwind gray-600 */
   --main-accent: #20563e;
+  --hover-accent: #1a3f36;
 }
 
 body {
@@ -29,5 +32,5 @@ html {
     text-decoration: none;
 }
 .button:hover{
-    background:#1a3f36;
+    background: var(--hover-accent);
 }

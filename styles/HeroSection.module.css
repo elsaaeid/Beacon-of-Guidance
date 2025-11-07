@@ -26,7 +26,7 @@
 .heading {
   font-size: 28px;
   font-weight: 700;
-  color: #20563e;
+  color: var(--main-accent);
   text-align: center;
   margin-bottom: 20px;
   line-height: 1.2;
@@ -54,22 +54,22 @@
   min-width: 140px;
   font-weight: 600;
   transition: background-color 0.3s, color 0.3s;
-  border: 2px solid #20563e;
+  border: 2px solid var(--main-accent);
   text-decoration: none;
   display: inline-block;
   text-align: center;
 }
 .primaryButton:hover {
-  background-color: #1a3f36; /* Darker shade for hover */
+  background-color: var(--hover-accent); /* Darker shade for hover */
 }
 
 .outlineButton {
   background-color: transparent;
-  color: #20563e;
+  color: var(--main-accent);
 }
 
 .outlineButton:hover {
-  background-color: #20563e;
+  background-color: var(--main-accent);
   color: white;
 }
 

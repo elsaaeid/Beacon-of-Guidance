@@ -1,16 +1,16 @@
 .acceptBtn {
-    background-color: #20563e; /* Tailwind's green-600 */
-    color: #ffffff;
+    background-color: var(--main-accent); /* Tailwind's green-600 */
+    color: var(--base-accent);
     transition: background-color 0.3s;
 }
 .acceptBtn:hover {
-    background-color: #1a3f36; /* Tailwind's green-700 */
+    background-color: var(--hover-accent); /* Tailwind's green-700 */
 }
 .dismissBtn {
     background-color: transparent;
     transition: background-color 0.3s, color 0.3s;
 }
 .dismissBtn:hover {
-    background-color: #20563e; /* Tailwind's gray-100 */
-    color: #ffffff; /* Tailwind's green-600 */
+    background-color: var(--main-accent); /* Tailwind's gray-100 */
+    color: var(--base-accent); /* Tailwind's green-600 */
 }

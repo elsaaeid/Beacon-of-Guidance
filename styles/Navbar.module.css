@@ -8,7 +8,7 @@
   left: 0;
   right: 0;
   height: 120px;
-  background-color: #ffffff;
+  background-color: var(--base-accent);
   z-index: 1000;
 }
 
