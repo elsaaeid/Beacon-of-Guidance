@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
             <a href="#" aria-label="X" className={styles.socialLink}>
               <FaTwitter className={styles.icon} />
             </a>
-            <a href="#" aria-label="Facebook" className={styles.socialLink}>
+            <a href="https://www.facebook.com/share/14U5UxgcJpV/" aria-label="Facebook" className={styles.socialLink}>
               <FaFacebookF className={styles.icon} />
             </a>
           </div>
@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
             </li>
             <li className={styles.contactItem}>
               <FiMail className={styles.contactIcon} aria-hidden="true" />
-              <span>mosad-elgendy@gmail.com</span>
+              <span>msd826318@gmail.com</span>
             </li>
             <li className={styles.contactItem}>
               <FiClock className={styles.contactIcon} aria-hidden="true" />
