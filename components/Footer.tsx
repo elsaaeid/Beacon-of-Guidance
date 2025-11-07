@@ -1,7 +1,7 @@
 // components/Footer.tsx
 import React from "react";
 import styles from '../styles/Footer.module.css'; // Import the CSS module
-import { FaYoutube, FaInstagram, FaTwitter, FaFacebookF, } from 'react-icons/fa';
+import { FaYoutube, FaInstagram, FaWhatsapp, FaFacebookF, } from 'react-icons/fa';
 import { FiMapPin, FiPhone, FiMail, FiClock } from 'react-icons/fi';
 import Link from "next/link";
 
@@ -26,8 +26,8 @@ const Footer: React.FC = () => {
             <a href="#" aria-label="Instagram" className={styles.socialLink}>
               <FaInstagram className={styles.icon} />
             </a>
-            <a href="#" aria-label="X" className={styles.socialLink}>
-              <FaTwitter className={styles.icon} />
+            <a href="https://wa.me/201032372337" aria-label="WhatsApp" className={styles.socialLink}>
+              <FaWhatsapp className={styles.icon} />
             </a>
             <a href="https://www.facebook.com/share/14U5UxgcJpV/" aria-label="Facebook" className={styles.socialLink}>
               <FaFacebookF className={styles.icon} />
