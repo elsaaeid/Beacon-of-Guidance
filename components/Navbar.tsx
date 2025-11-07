@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { FiMenu, FiX } from 'react-icons/fi';
 import styles from '../styles/Navbar.module.css'; // Import the CSS module
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -32,7 +33,9 @@ const Navbar: React.FC = () => {
     <>
     <nav className={styles.nav}>
       <div className={styles.container}>
-          <img src="/assets/images/logo.png" alt="منارة الهداية" className={styles.logo} />
+          <Link href="/">
+            <img src="/assets/images/logo.png" alt="منارة الهدى" className={styles.logo} />
+          </Link>
         {/* Mobile hamburger */}
         <button
           aria-label={open ? 'Close navigation' : 'Open navigation'}

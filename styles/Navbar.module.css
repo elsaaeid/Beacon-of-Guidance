@@ -64,6 +64,7 @@
 .logo {
   height: 100px;
   width: auto;
+  cursor: pointer;
 }
 .navItem:hover {
   color: #1f4f43;
