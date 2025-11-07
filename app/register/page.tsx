@@ -1,6 +1,6 @@
 "use client";
 // components/RegisterForm.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaFacebookF, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import '../../styles/register.css';
 import emailjs from '@emailjs/browser';
@@ -23,6 +23,12 @@ const RegisterForm: React.FC = () => {
   const [selectedCourse, setSelectedCourse] = useState(courses[0]);
   const [studyType, setStudyType] = useState("عن بعد (أونلاين)");
   const [isSending, setIsSending] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // mark mounted to avoid hydration mismatches caused by browser extensions
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // "Send Email" Function
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
@@ -93,7 +99,8 @@ const RegisterForm: React.FC = () => {
           <p className="text-gray-600 mb-8 text-sm leading-relaxed">
             املأ النموذج التالي للتسجيل في إحدى دوراتنا، وسيتواصل معك أحد ممثلي خدمة العملاء في أقرب وقت ممكن
           </p>
-          <form onSubmit={sendEmail} className="flex flex-col gap-4">
+          {mounted ? (
+            <form onSubmit={sendEmail} className="flex flex-col gap-4">
             {/* Full Name */}
             <label htmlFor="fullName" className="text-gray-700 text-sm font-semibold">
               الاسم الكامل
@@ -188,13 +195,24 @@ const RegisterForm: React.FC = () => {
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              className="mt-6 bg-green-800 hover:bg-green-900 text-white rounded-md py-3 font-semibold transition"
-            >
-              إرسال طلب التسجيل
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={isSending}
+                className={`mt-6 bg-green-800 hover:bg-green-900 text-white rounded-md py-3 font-semibold transition ${isSending ? 'opacity-60 cursor-not-allowed' : ''}`}
+              >
+                {isSending ? 'جاري الإرسال...' : 'إرسال طلب التسجيل'}
+              </button>
+            </form>
+          ) : (
+            <div className="flex flex-col gap-4">
+              <p className="text-gray-600 mb-8 text-sm leading-relaxed">جارٍ تحميل النموذج...</p>
+              <div className="h-12 bg-gray-100 rounded-md" />
+              <div className="h-12 bg-gray-100 rounded-md" />
+              <div className="h-12 bg-gray-100 rounded-md" />
+              <div className="h-12 bg-gray-100 rounded-md w-1/2" />
+              <button disabled className="mt-6 bg-green-800 text-white rounded-md py-3 font-semibold opacity-60 cursor-not-allowed">جاري الإرسال...</button>
+            </div>
+          )}
           {/* Toasts */}
           <ToastContainer />
         </div>
