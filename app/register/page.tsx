@@ -1,7 +1,7 @@
 "use client";
 // components/RegisterForm.tsx
 import React, { useState } from "react";
-import { FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
+import { FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 import '../../styles/register.css';
 
 const courses = [
@@ -48,9 +48,6 @@ const RegisterForm: React.FC = () => {
 
           {/* Social icons */}
           <div className="flex justify-evenly w-full max-w-xs mt-4 space-x-4">
-            <a href="#" aria-label="Instagram" className="hover:text-gray-300">
-              <FaInstagram className="w-6 h-6" />
-            </a>
             <a href="https://www.facebook.com/share/14U5UxgcJpV/" aria-label="Facebook" className="hover:text-gray-300">
               <FaFacebookF className="w-6 h-6" />
             </a>
