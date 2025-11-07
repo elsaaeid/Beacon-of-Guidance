@@ -57,10 +57,6 @@ export default function ShariahStudiesPage() {
               <Link href="/register">
                 <button className={styles.button}>سجل الآن</button>
               </Link>
-
-              <div style={{ marginTop: 12 }}>
-                <a href="#contacts" className={styles.contactLink}>معلومات الاتصال</a>
-              </div>
             </div>
           </aside>
         </div>
