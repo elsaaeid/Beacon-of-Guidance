@@ -63,13 +63,13 @@ const Footer: React.FC = () => {
               <span>مصر مدينة المنصورة، قرية ميت خميس</span>
             </li>
             <li>
-              <Link href="tel:01032372337" className={styles.contactItem}>
+              <Link href="tel:01032372337" className={`${styles.contactItem} cursor-pointer`}>
                 <FiPhone className={styles.contactIcon} aria-hidden="true" />
                 <span>01032372337</span>
               </Link>
             </li>
             <li>
-              <Link href="mailto:msd826318@gmail.com" className={styles.contactItem}>
+              <Link href="mailto:msd826318@gmail.com" className={`${styles.contactItem} cursor-pointer`}>
                 <FiMail className={styles.contactIcon} aria-hidden="true" />
                 <span>msd826318@gmail.com</span>
               </Link>
