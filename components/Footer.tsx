@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
             </li>
             <li className={styles.contactItem}>
               <FiPhone className={styles.contactIcon} aria-hidden="true" />
-              <span>+20 1032372337</span>
+              <span>01032372337</span>
             </li>
             <li className={styles.contactItem}>
               <FiMail className={styles.contactIcon} aria-hidden="true" />

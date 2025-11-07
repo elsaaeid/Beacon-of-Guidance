@@ -51,13 +51,13 @@ const RegisterForm: React.FC = () => {
             <a href="#" aria-label="Instagram" className="hover:text-gray-300">
               <FaInstagram className="w-6 h-6" />
             </a>
-            <a href="#" aria-label="Facebook" className="hover:text-gray-300">
+            <a href="https://www.facebook.com/share/14U5UxgcJpV/" aria-label="Facebook" className="hover:text-gray-300">
               <FaFacebookF className="w-6 h-6" />
             </a>
             <a href="#" aria-label="Telegram" className="hover:text-gray-300">
               <FaTelegramPlane className="w-6 h-6" />
             </a>
-            <a href="#" aria-label="WhatsApp" className="hover:text-gray-300">
+            <a href="https://wa.me/201032372337" aria-label="WhatsApp" className="hover:text-gray-300">
               <FaWhatsapp className="w-6 h-6" />
             </a>
           </div>
