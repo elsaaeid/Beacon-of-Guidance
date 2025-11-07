@@ -34,13 +34,17 @@ const ShariahStudies: React.FC = () => {
           <li className={styles.tag}>السيرة النبوية</li>
           <li className={styles.tag}>العقيدة الإسلامية</li>
         </ul>
-
-        <Link
+        <div style={{
+              width: "50%",
+              marginTop: 20
+            }}>
+              <Link
           className="button"
           href="courses/shariah-studies"
         >
           التفاصيل والتسجيل
         </Link>
+            </div>
       </section>
     </article>
   );
