@@ -62,14 +62,14 @@ const Footer: React.FC = () => {
               <FiMapPin className={styles.contactIcon} aria-hidden="true" />
               <span>مصر مدينة المنصورة، قرية ميت خميس</span>
             </li>
-            <li className={styles.contactItem}>
-              <Link href="tel:01032372337" className={styles.contactLink}>
+            <li>
+              <Link href="tel:01032372337" className={styles.contactItem}>
                 <FiPhone className={styles.contactIcon} aria-hidden="true" />
                 <span>01032372337</span>
               </Link>
             </li>
-            <li className={styles.contactItem}>
-              <Link href="mailto:msd826318@gmail.com" className={styles.contactLink}>
+            <li>
+              <Link href="mailto:msd826318@gmail.com" className={styles.contactItem}>
                 <FiMail className={styles.contactIcon} aria-hidden="true" />
                 <span>msd826318@gmail.com</span>
               </Link>
