@@ -45,13 +45,6 @@ npm run dev
 3. اضبط Root Directory إلى `client` (مهم إن كان الريبو يحوي أكثر من مشروع).
 4. تأكد من إعداد المتغيّرات البيئية في Settings إن لزم.
 
-أو باستخدام CLI (من داخل `client`):
-```powershell
-npm i -g vercel
-cd e:\masget\client
-vercel --prod --confirm
-```
-
 ## نصائح وحلول لمشاكل شائعة
 - ENOSPC / EPERM: تحقق من مساحة القرص وأذونات المجلدات، واحذف `node_modules` ثم `npm install` إن لزم.
 - dev server locked: اغلق أي عملية Node التي تشغل المنفذ 3000 أو احذف `.next/dev/lock` ثم شغّل `npm run dev`.
