@@ -198,7 +198,7 @@ const RegisterForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSending}
-                className={`mt-6 rounded-md py-3 font-semibold transition ${styles.button} ${isSending ? 'opacity-60 cursor-not-allowed' : ''}`}
+                className={`button mt-6 rounded-md py-3 font-semibold transition ${isSending ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 {isSending ? 'جاري الإرسال...' : 'إرسال طلب التسجيل'}
               </button>
@@ -210,7 +210,7 @@ const RegisterForm: React.FC = () => {
               <div className="h-12 bg-gray-100 rounded-md" />
               <div className="h-12 bg-gray-100 rounded-md" />
               <div className="h-12 bg-gray-100 rounded-md w-1/2" />
-              <button disabled className={`mt-6 rounded-md py-3 font-semibold opacity-60 cursor-not-allowed ${styles.button}`}>
+              <button disabled className={`mt-6 rounded-md py-3 font-semibold opacity-60 cursor-not-allowed button`}>
                 جاري الإرسال...
               </button>
             </div>

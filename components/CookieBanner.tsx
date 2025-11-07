@@ -37,9 +37,9 @@ export default function CookieBanner() {
       </div>
 
       <div className="flex gap-2">
-        <button onClick={accept} className={`cursor-pointer px-4 py-2 rounded-md text-sm ${styles.acceptBtn}`}
+        <button onClick={accept} className={`cursor-pointer px-4 py-2 rounded-md text-sm button`}
         >موافق</button>
-        <button onClick={dismiss} className={`cursor-pointer border border-gray-300 text-gray-700 px-3 py-2 rounded-md text-sm ${styles.dismissBtn}`}>رفض</button>
+        <button onClick={dismiss} className={`cursor-pointer border border-gray-300 text-gray-700 px-3 py-3 rounded-md text-sm ${styles.dismissBtn}`}>رفض</button>
       </div>
     </div>
   );

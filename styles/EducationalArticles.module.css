@@ -103,19 +103,3 @@
   margin-top: 3rem; /* mt-12 */
   text-align: center;
 }
-
-.button {
-  border-radius: 0.5rem; /* lg */
-  border: 1px solid #166534; /* green-800 */
-  color: #166534; /* green-800 */
-  padding: 0.5rem 1.5rem; /* py-2 px-6 */
-  font-size: 0.875rem; /* sm */
-  font-weight: 500;
-  background-color: transparent;
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
-}
-
-.button:hover {
-  background-color: #f0fdf4; /* green-50 */
-}

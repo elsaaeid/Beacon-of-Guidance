@@ -20,6 +20,7 @@ export default function ScrollToTop() {
     <button
       aria-label="Go to top"
       onClick={handleClick}
+      className='button'
       style={{
         position: 'fixed',
         right: 16,
@@ -31,11 +32,8 @@ export default function ScrollToTop() {
         width: 44,
         height: 44,
         borderRadius: 8,
-        background: '#1f4f43',
-        color: '#fff',
         border: 'none',
         boxShadow: '0 6px 20px rgba(31,79,67,0.18)',
-        cursor: 'pointer',
       }}
     >
       <FiChevronUp size={20} aria-hidden="true" />

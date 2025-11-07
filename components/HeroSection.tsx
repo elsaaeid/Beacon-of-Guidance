@@ -15,7 +15,7 @@ const HeroSection: React.FC = () => {
           تقدم منارة الهدى تعليم القرآن الكريم والعلوم الشرعية على يد نخبة من المعلمين المعتمدين من الأزهر الشريف ووزارة الأوقاف المصرية. بأساليب تعليمية حديثة ومبتكر
         </p>
         <div className={styles.buttonsContainer}>
-          <a className={styles.primaryButton} href="/register">
+          <a className="button" href="/register">
             ابدأ التعلم الآن
           </a>
           <a className={styles.outlineButton} href="#courses">

@@ -32,7 +32,7 @@ export default function Course2Page() {
             <p>السعر: تواصل معنا للحصول على الأسعار والخطط</p>
             <div style={{ marginTop: 16 }}>
               <Link href="/register">
-                <button style={{ background: '#1f4f43', color: '#fff', padding: '10px 18px', borderRadius: 6, border: 'none', cursor: 'pointer' }}>
+                <button className='button'>
                   سجل الآن
                 </button>
               </Link>

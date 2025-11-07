@@ -55,7 +55,7 @@ export default function ShariahStudiesPage() {
 
             <div style={{ marginTop: 16 }}>
               <Link href="/register">
-                <button className={styles.button}>سجل الآن</button>
+                <button className="button">سجل الآن</button>
               </Link>
             </div>
           </aside>

@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --main-accent: #20563e;
 }
 
 body {
@@ -10,4 +11,17 @@ body {
 }
 html {
   scroll-behavior: smooth;
+}
+
+.button{
+  background:var(--main-accent);
+  color:#fff;
+  padding: 10px;
+  border-radius:6px;
+  border:none;
+  cursor:pointer;
+  transition:background ease-in-out 0.3s;
+}
+.button:hover{
+  background:#1a3f36;
 }

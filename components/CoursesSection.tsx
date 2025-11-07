@@ -29,7 +29,7 @@ const CoursesSection: React.FC = () => {
             <p className={styles.cardText}>
               تعليم أحكام التجويد والتلاوة من البداية وحتى الإتقان على يد معلمين ومعلمات مجازين في كتب التجويد.
             </p>
-            <Link href="/courses/course1" className={styles.button}>التفاصيل والتسجيل</Link>
+            <Link href="/courses/course1" className="button">التفاصيل والتسجيل</Link>
           </div>
 
           {/* Card 2 */}
@@ -45,7 +45,7 @@ const CoursesSection: React.FC = () => {
             <p className={styles.cardText}>
               الحصول على إجازة في القرآن الكريم بالسند المتصل إلى رسول الله صلى الله عليه وسلم، بأعلى سند في العالم على يد كبار المشايخ.
             </p>
-            <Link href="/courses/course2" className={styles.button}>التفاصيل والتسجيل</Link>
+            <Link href="/courses/course2" className="button">التفاصيل والتسجيل</Link>
           </div>
 
           {/* Card 3 */}
@@ -62,7 +62,7 @@ const CoursesSection: React.FC = () => {
             <p className={styles.cardText}>
               دورة متكاملة لتحفيظ القرآن الكريم للرجال والنساء والأطفال على يد معلمين ومعلمات معتمدين من الأزهر الشريف ووزارة الأوقاف المصرية.
             </p>
-            <Link href="/courses/course3" className={styles.button}>التفاصيل والتسجيل</Link>
+            <Link href="/courses/course3" className="button">التفاصيل والتسجيل</Link>
           </div>
         </div>
       </div>

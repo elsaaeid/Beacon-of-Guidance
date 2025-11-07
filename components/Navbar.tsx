@@ -67,7 +67,7 @@ const Navbar: React.FC = () => {
 
         {/* Left Side - Register Button and Icon */}
         <div className={styles.leftSide}>
-          <a href="/register" className={styles.button}>سجل الآن</a>
+          <a href="/register" className="button">سجل الآن</a>
         </div>
       </div>
     </nav>

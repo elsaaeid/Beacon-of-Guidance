@@ -1,5 +1,5 @@
 :root{
-  --main-accent:#1f4f43;
+  --main-accent:#20563e;
   --muted:#666;
 }
 
@@ -74,15 +74,6 @@
 
 .small{
   margin:0 0 6px 0;
-}
-
-.button{
-  background:var(--main-accent);
-  color:#fff;
-  padding:10px 18px;
-  border-radius:6px;
-  border:none;
-  cursor:pointer;
 }
 
 .contactLink{

@@ -36,7 +36,7 @@ const ShariahStudies: React.FC = () => {
         </ul>
 
         <Link
-          className={styles.button}
+          className="button"
           href="courses/shariah-studies"
         >
           التفاصيل والتسجيل
