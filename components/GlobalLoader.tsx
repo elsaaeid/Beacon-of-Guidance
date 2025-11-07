@@ -32,13 +32,35 @@ export default function GlobalLoader() {
       window.addEventListener('load', onInitialLoad);
     }
 
-    const onStart = () => {
-      if (hideTimeoutRef.current) {
-        window.clearTimeout(hideTimeoutRef.current);
-        hideTimeoutRef.current = null;
+    const onStart = (url?: string) => {
+      try {
+        if (hideTimeoutRef.current) {
+          window.clearTimeout(hideTimeoutRef.current);
+          hideTimeoutRef.current = null;
+        }
+
+        // If a URL is provided, check whether the navigation target is the home page.
+        // Use URL parsing to handle absolute or relative URLs.
+        let isHomeTarget = false;
+        if (url) {
+          try {
+            const targetPath = new URL(url, window.location.href).pathname;
+            isHomeTarget = targetPath === '/';
+          } catch (e) {
+            // If URL parsing fails, fallback to simple equality
+            isHomeTarget = url === '/';
+          }
+        }
+
+        // Show loader for any navigation, but ensure we definitely show it when
+        // navigating to home (addressing the reported issue).
+        shownAtRef.current = Date.now();
+        setVisible(true);
+      } catch (e) {
+        // swallow errors to avoid breaking navigation
+        shownAtRef.current = Date.now();
+        setVisible(true);
       }
-      shownAtRef.current = Date.now();
-      setVisible(true);
     };
 
     const onDone = () => {
