@@ -63,12 +63,16 @@ const Footer: React.FC = () => {
               <span>مصر مدينة المنصورة، قرية ميت خميس</span>
             </li>
             <li className={styles.contactItem}>
-              <FiPhone className={styles.contactIcon} aria-hidden="true" />
-              <span>01032372337</span>
+              <Link href="tel:01032372337" className={styles.contactLink}>
+                <FiPhone className={styles.contactIcon} aria-hidden="true" />
+                <span>01032372337</span>
+              </Link>
             </li>
             <li className={styles.contactItem}>
-              <FiMail className={styles.contactIcon} aria-hidden="true" />
-              <span>msd826318@gmail.com</span>
+              <Link href="mailto:msd826318@gmail.com" className={styles.contactLink}>
+                <FiMail className={styles.contactIcon} aria-hidden="true" />
+                <span>msd826318@gmail.com</span>
+              </Link>
             </li>
             <li className={styles.contactItem}>
               <FiClock className={styles.contactIcon} aria-hidden="true" />
