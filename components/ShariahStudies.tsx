@@ -35,7 +35,7 @@ const ShariahStudies: React.FC = () => {
           <li className={styles.tag}>العقيدة الإسلامية</li>
         </ul>
         <div style={{
-              width: "50%",
+              width: "max-content",
               marginTop: 20
             }}>
               <Link
