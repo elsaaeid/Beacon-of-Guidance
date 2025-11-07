@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "منارة الهداية",
-  description: "منارة الهداية - منصة تعليمية متخصصة في القرآن الكريم والعلوم الشرعية",
+  title: "منارة الهدى",
+  description: "منارة الهدى - منصة تعليمية متخصصة في القرآن الكريم والعلوم الشرعية",
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
