@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
 
           <div className={styles.socialIcons}>
             {/* Social media icons */}
-            <a href="#" aria-label="YouTube" className={styles.socialLink}>
+            <a href="https://www.youtube.com/channel/UCw4QjK5mOvi_D8l4AmRhb5A" aria-label="YouTube" className={styles.socialLink}>
               <FaYoutube className={styles.icon} />
             </a>
             <a href="https://wa.me/201032372337" aria-label="WhatsApp" className={styles.socialLink}>
@@ -63,6 +63,12 @@ const Footer: React.FC = () => {
               <Link href="tel:01032372337" className={`${styles.contactItem} cursor-pointer`}>
                 <FiPhone className={styles.contactIcon} aria-hidden="true" />
                 <span>01032372337</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="tel:01032372337" className={`${styles.contactItem} cursor-pointer`}>
+                <FiPhone className={styles.contactIcon} aria-hidden="true" />
+                <span>01224925638</span>
               </Link>
             </li>
             <li>
