@@ -29,7 +29,7 @@ const TeachersSection: React.FC = () => {
           <h3 className={styles.name}>الشيخ مسعد الجندى</h3>
           <p className={styles.role}>شيخ القرآن والإسلاميات</p>
           <p className={styles.description}>
-             متخصص في تعليم القرآن ونور البيان للعرب وصاحب موقع منارة الهداية التعليمي.
+             متخصص في تعليم القرآن ونور البيان للعرب وصاحب موقع منارة الهدى التعليمي.
           </p>
         </article>
       </div>
