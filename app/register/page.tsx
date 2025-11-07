@@ -1,8 +1,8 @@
 "use client";
 // components/RegisterForm.tsx
 import React, { useState } from "react";
-import { FiBookOpen } from 'react-icons/fi';
 import { FaInstagram, FaFacebookF, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
+import '../../styles/register.css';
 
 const courses = [
   "اختر الدورة",
@@ -37,8 +37,8 @@ const RegisterForm: React.FC = () => {
       <div className="max-w-5xl w-full bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row rtl" dir="rtl">
         {/* Left side - Green panel */}
         <div className="md:w-1/2 bg-green-800 text-white p-10 flex flex-col justify-center items-center gap-8 text-center">
-          <div className="bg-green-700 rounded-full p-5">
-            <FiBookOpen className="h-10 w-10" />
+          <div className="bg-white rounded-full p-2">
+            <img src="/assets/images/logo.png" alt="منارة الهداية" className="logo" />
           </div>
 
           <h2 className="text-2xl font-semibold">ابدأ رحلة التعلم اليوم</h2>
