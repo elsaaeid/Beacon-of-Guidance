@@ -7,12 +7,14 @@ import ShariahStudies from "@/components/ShariahStudies";
 import StudentTestimonials from "@/components/StudentTestimonials";
 import TeachersSection from "@/components/TeachersSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
+import CookieBanner from '@/components/CookieBanner';
 
 export default function Home() {
   return (
     <div className="flex flex-col w-full">
       <Navbar />
       <HeroSection />
+      <CookieBanner />
       <WhyChooseUs />
       <CoursesSection />
       <ShariahStudies />
