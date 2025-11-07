@@ -16,7 +16,7 @@
 .title {
   font-size: 1.5rem; /* 2xl */
   font-weight: 600;
-  color: #166534; /* green-800 */
+  color: var(--main-accent);
   margin-bottom: 0.5rem; /* mb-2 */
 }
 
