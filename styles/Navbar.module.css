@@ -1,6 +1,7 @@
 /* Navbar.module.css */
 .nav {
   border-bottom: 1px solid #d4d4d4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   direction: rtl;
   font-family: Arial, sans-serif;
   position: fixed;
