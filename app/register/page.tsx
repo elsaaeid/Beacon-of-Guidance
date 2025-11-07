@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import { FaFacebookF, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import '../../styles/register.css';
+import emailjs from '@emailjs/browser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const courses = [
   "اختر الدورة",
@@ -19,17 +22,41 @@ const RegisterForm: React.FC = () => {
   const [phone, setPhone] = useState("");
   const [selectedCourse, setSelectedCourse] = useState(courses[0]);
   const [studyType, setStudyType] = useState("عن بعد (أونلاين)");
+  const [isSending, setIsSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // "Send Email" Function
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would normally handle form submission, e.g., send data to API
 
-    alert(`تم إرسال طلب التسجيل:
-    الاسم: ${fullName}
-    البريد الإلكتروني: ${email}
-    رقم الهاتف: ${phone}
-    الدورة: ${selectedCourse}
-    نوع الدراسة: ${studyType}`);
+    const form = e.currentTarget; // properly typed HTMLFormElement
+    setIsSending(true);
+
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
+    const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID || '';
+
+    emailjs.sendForm(serviceId, templateId, form, userId)
+      .then(
+        (result) => {
+          toast.success('تم إرسال الطلب بنجاح');
+          console.log(result.text);
+
+          // reset controlled state so inputs clear properly
+          setFullName('');
+          setEmail('');
+          setPhone('');
+          setSelectedCourse(courses[0]);
+          setStudyType('عن بعد (أونلاين)');
+          // reset the native form as well (safe fallback)
+          try { form.reset(); } catch {}
+        },
+        (error) => {
+          const msg = (error && (error.text || error.message)) || 'حدث خطأ أثناء الإرسال';
+          toast.error(msg);
+          console.error(error);
+        }
+      )
+      .finally(() => setIsSending(false));
   };
 
   return (
@@ -38,7 +65,7 @@ const RegisterForm: React.FC = () => {
         {/* Left side - Green panel */}
         <div className="md:w-1/2 bg-green-800 text-white p-10 flex flex-col justify-center items-center gap-8 text-center">
           <div className="bg-white rounded-full p-2">
-            <img src="/assets/images/logo.png" alt="منارة الهداية" className="logo" />
+            <img src="/assets/images/logo.png" alt="منارة الهدى" className="logo" />
           </div>
 
           <h2 className="text-2xl font-semibold">ابدأ رحلة التعلم اليوم</h2>
@@ -66,7 +93,7 @@ const RegisterForm: React.FC = () => {
           <p className="text-gray-600 mb-8 text-sm leading-relaxed">
             املأ النموذج التالي للتسجيل في إحدى دوراتنا، وسيتواصل معك أحد ممثلي خدمة العملاء في أقرب وقت ممكن
           </p>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={sendEmail} className="flex flex-col gap-4">
             {/* Full Name */}
             <label htmlFor="fullName" className="text-gray-700 text-sm font-semibold">
               الاسم الكامل
@@ -76,6 +103,7 @@ const RegisterForm: React.FC = () => {
               id="fullName"
               placeholder="الاسم الكامل"
               value={fullName}
+              name="name" 
               onChange={(e) => setFullName(e.target.value)}
               required
               className="border border-gray-300 rounded-md p-3 text-right focus:outline-none focus:ring-2 focus:ring-green-700"
@@ -90,6 +118,7 @@ const RegisterForm: React.FC = () => {
               id="email"
               placeholder="البريد الإلكتروني"
               value={email}
+              name="email"
               onChange={(e) => setEmail(e.target.value)}
               required
               className="border border-gray-300 rounded-md p-3 text-right focus:outline-none focus:ring-2 focus:ring-green-700"
@@ -115,6 +144,7 @@ const RegisterForm: React.FC = () => {
             </label>
             <select
               id="course"
+              name="course"
               value={selectedCourse}
               onChange={(e) => setSelectedCourse(e.target.value)}
               required
@@ -165,6 +195,8 @@ const RegisterForm: React.FC = () => {
               إرسال طلب التسجيل
             </button>
           </form>
+          {/* Toasts */}
+          <ToastContainer />
         </div>
       </div>
     </div>

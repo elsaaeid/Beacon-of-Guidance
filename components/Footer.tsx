@@ -89,8 +89,8 @@ const Footer: React.FC = () => {
       <div className={styles.bottom}>
         <p className={styles.copyright}> جميع الحقوق محفوظة 2025 © لدى <Link className={styles.author} target="_blank" href="https://alsaaeid-ellithy.vercel.app">Alsaaeid Ellithy</Link></p>
         <div className={styles.bottomLinks}>
-          <span className={styles.bottomLink}>سياسة الخصوصية</span>
-          <span className={styles.bottomLink}>الشروط والأحكام</span>
+          <Link href="/privacy" className={styles.bottomLink}>سياسة الخصوصية</Link>
+          <Link href="/terms" className={styles.bottomLink}>الشروط والأحكام</Link>
         </div>
       </div>
     </footer>
