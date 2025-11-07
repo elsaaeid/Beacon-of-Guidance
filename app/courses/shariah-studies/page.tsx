@@ -54,8 +54,8 @@ export default function ShariahStudiesPage() {
             <p className={styles.small}>المدرسون: نخبة من المعلمين المتخصصين</p>
 
             <div style={{ marginTop: 16 }}>
-              <Link href="/register">
-                <button className="button">سجل الآن</button>
+              <Link className="button" href="/register">
+                سجل الآن
               </Link>
             </div>
           </aside>
