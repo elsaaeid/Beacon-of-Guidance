@@ -2,7 +2,7 @@
 // components/RegisterForm.tsx
 import React, { useState, useEffect } from "react";
 import { FaFacebookF, FaWhatsapp, FaYoutube } from 'react-icons/fa';
-import '../../styles/register.css';
+import styles from '../../styles/RegisterForm.module.css';
 import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -69,7 +69,7 @@ const RegisterForm: React.FC = () => {
     <div id="contacts" className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl w-full bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row rtl" dir="rtl">
         {/* Left side - Green panel */}
-        <div className="md:w-1/2 bg-green-800 text-white p-10 flex flex-col justify-center items-center gap-8 text-center">
+        <div className={`md:w-1/2 text-white p-10 flex flex-col justify-center items-center gap-8 text-center ${styles.leftPanel}`}>
           <div className="bg-white rounded-full p-2">
             <img src="/assets/images/logo.png" alt="منارة الهدى" className="logo" />
           </div>
@@ -198,7 +198,7 @@ const RegisterForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSending}
-                className={`mt-6 bg-green-800 hover:bg-green-900 text-white rounded-md py-3 font-semibold transition ${isSending ? 'opacity-60 cursor-not-allowed' : ''}`}
+                className={`mt-6 rounded-md py-3 font-semibold transition ${styles.button} ${isSending ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 {isSending ? 'جاري الإرسال...' : 'إرسال طلب التسجيل'}
               </button>
@@ -210,7 +210,9 @@ const RegisterForm: React.FC = () => {
               <div className="h-12 bg-gray-100 rounded-md" />
               <div className="h-12 bg-gray-100 rounded-md" />
               <div className="h-12 bg-gray-100 rounded-md w-1/2" />
-              <button disabled className="mt-6 bg-green-800 text-white rounded-md py-3 font-semibold opacity-60 cursor-not-allowed">جاري الإرسال...</button>
+              <button disabled className={`mt-6 rounded-md py-3 font-semibold opacity-60 cursor-not-allowed ${styles.button}`}>
+                جاري الإرسال...
+              </button>
             </div>
           )}
           {/* Toasts */}

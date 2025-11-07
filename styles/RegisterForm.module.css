@@ -1,0 +1,12 @@
+.leftPanel {
+  background-color: #20563e; /* Tailwind's green-800 */
+}
+.button {
+  background-color: #20563e; /* Tailwind's green-800 */
+  color: #ffffff;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #1a3f36; /* Tailwind's green-900 */
+}

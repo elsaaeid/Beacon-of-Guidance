@@ -11,7 +11,7 @@
 .title {
   font-size: 28px;
   font-weight: 600;
-  color: #1f4f43;
+  color: #20563e;
   margin-bottom: 8px;
   text-align: center;
 }
@@ -40,7 +40,7 @@
 
 .imageWrapper {
   border-radius: 50%;
-  border: 3px solid #1f4f43;
+  border: 3px solid #20563e;
   width: 160px;
   height: 160px;
   overflow: hidden;
@@ -55,7 +55,7 @@
 
 .name {
   font-weight: 600;
-  color: #1f4f43;
+  color: #20563e;
   font-size: 17px;
   margin-bottom: 4px;
 }

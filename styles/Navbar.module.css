@@ -67,12 +67,12 @@
   cursor: pointer;
 }
 .navItem:hover {
-  color: #1f4f43;
+  color: #20563e;
   font-weight: bold;
 }
 
 .active {
-  color: #1f4f43;
+  color: #20563e;
   font-weight: bold;
 }
 
@@ -90,7 +90,7 @@
   font-size: 20px;
   font-weight: 600;
   color: #fff;
-  background-color: #1f4f43;
+  background-color: #20563e;
   border-radius: 4px;
   border: none;
   cursor: pointer;
