@@ -30,39 +30,47 @@ const RegisterForm: React.FC = () => {
     setMounted(true);
   }, []);
 
-  // "Send Email" Function
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+  // "Send Email" Function — use templateParams for clarity and robust mapping
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const form = e.currentTarget; // properly typed HTMLFormElement
+    const form = e.currentTarget;
     setIsSending(true);
 
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
-    const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID || '';
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? '';
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? '';
+    const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID ?? '';
 
-    emailjs.sendForm(serviceId, templateId, form, userId)
-      .then(
-        (result) => {
-          toast.success('تم إرسال الطلب بنجاح');
-          console.log(result.text);
+    const templateParams = {
+      name: fullName,
+      email,
+      phone,
+      course: selectedCourse,
+      studyType,
+      subject: `تسجيل جديد - ${selectedCourse}`,
+      submittedAt: new Date().toLocaleString(),
+    };
 
-          // reset controlled state so inputs clear properly
-          setFullName('');
-          setEmail('');
-          setPhone('');
-          setSelectedCourse(courses[0]);
-          setStudyType('عن بعد (أونلاين)');
-          // reset the native form as well (safe fallback)
-          try { form.reset(); } catch {}
-        },
-        (error) => {
-          const msg = (error && (error.text || error.message)) || 'حدث خطأ أثناء الإرسال';
-          toast.error(msg);
-          console.error(error);
-        }
-      )
-      .finally(() => setIsSending(false));
+    try {
+      const result = await emailjs.send(serviceId, templateId, templateParams, userId);
+      toast.success('تم إرسال الطلب بنجاح');
+      console.log(result.text);
+
+      // clear controlled state so UI updates
+      setFullName('');
+      setEmail('');
+      setPhone('');
+      setSelectedCourse(courses[0]);
+      setStudyType('عن بعد (أونلاين)');
+
+      // reset native form as a safe fallback
+      try { form.reset(); } catch {}
+    } catch (error: any) {
+      const msg = error?.text || error?.message || 'حدث خطأ أثناء الإرسال';
+      toast.error(msg);
+      console.error(error);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -140,6 +148,7 @@ const RegisterForm: React.FC = () => {
               id="phone"
               placeholder="رقم الهاتف"
               value={phone}
+              name="phone"
               onChange={(e) => setPhone(e.target.value)}
               required
               className="border border-gray-300 rounded-md p-3 text-right focus:outline-none focus:ring-2 focus:ring-green-700"
