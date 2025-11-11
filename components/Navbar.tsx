@@ -61,6 +61,9 @@ const Navbar: React.FC = () => {
             <a href="#teachers" className={`${styles.navItem} ${isActive('#teachers') ? styles.active : ''}`}>المعلمون</a>
           </li>
           <li>
+            <a href="#books" className={`${styles.navItem} ${isActive('#books') ? styles.active : ''}`}>الأحاديث</a>
+          </li>
+          <li>
             <a href="#reviews" className={`${styles.navItem} ${isActive('#reviews') ? styles.active : ''}`}>التقييمات</a>
           </li>
         </ul>
