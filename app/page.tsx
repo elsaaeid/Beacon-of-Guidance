@@ -8,6 +8,7 @@ import StudentTestimonials from "@/components/StudentTestimonials";
 import TeachersSection from "@/components/TeachersSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import CookieBanner from '@/components/CookieBanner';
+import BooksCardsWithModal from "@/components/BooksCardsWithModal";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <CoursesSection />
       <ShariahStudies />
       <TeachersSection />
+      <BooksCardsWithModal />
       <EducationalArticles />
       <StudentTestimonials />
       <Footer />

@@ -1,0 +1,168 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+    color: var(--main-accent);
+    margin-bottom: .5rem;
+    font-size: 25px;
+    font-weight: 600;
+}
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 15rem;
+  border-radius: 1.5rem 1.5rem 1rem 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--base-accent);
+  /* Add smooth shadow transition on hover */
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  outline: none;
+}
+
+.header {
+  color: var(--base-accent);
+  padding: 1.5rem 1rem;
+  font-weight: bold;
+  font-size: 1.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  background-color: var(--main-accent);
+  background-image:
+    radial-gradient(circle at 0 0, rgba(255 255 255 / 0.1) 20%, transparent 21%),
+    radial-gradient(circle at 10px 10px, rgba(255 255 255 / 0.1) 20%, transparent 21%);
+  background-size: 20px 20px;
+  background-repeat: repeat;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+}
+
+.content {
+  background-color: var(--base-accent);
+  padding: 1rem;
+  text-align: center;
+  color: var(--gray-color); /* gray-700 */
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.hadithCount {
+  font-size: 0.875rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal styles */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 50;
+}
+
+.modalContent {
+  background-color: var(--base-accent);
+  border-radius: 0.75rem;
+  max-width: 36rem;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  position: relative;
+  text-align: right;
+  direction: rtl;
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  color: #718096; /* gray-500 */
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.modalCloseBtn:hover,
+.modalCloseBtn:focus {
+  color: var(--gray-color); /* gray-700 */
+  outline: none;
+}
+
+.modalTitle {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: var(--main-accent);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.hadithList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hadithItem {
+  border-bottom: 1px solid #e2e8f0; /* gray-200 */
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hadithItem:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.hadithNumber {
+  font-weight: 600;
+  color: var(--main-accent);
+  margin-left: 0.5rem;
+}
+
+.hadithText {
+  margin-top: 0;
+  line-height: 1.5;
+}
+
+/* Keyboard Focus styles */
+.card:focus-visible {
+  outline: 2px solid var(--main-accent);
+  outline-offset: 4px;
+}
