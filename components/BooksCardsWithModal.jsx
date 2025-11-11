@@ -262,7 +262,8 @@ const BooksCardsWithModal = () => {
   return (
     <>
       <div className={styles.container} id='books'>
-        <h2 className={styles.title}>قراءة كتب الحديث النبوي الشريف</h2>
+        <h2 className={styles.title}>كتب الحديث النبوي الشريف</h2>
+        <p className={styles.description}>استمتع بقراءة مجموعة من الأحاديث النبوية الشريفة</p>
         <div className={styles.cardContainer}>
             {books.map(({ key, title, hadithCount, subtitle }) => (
               <div
