@@ -18,6 +18,7 @@
         "name": "next"
       }
     ],
+    "typeRoots": ["./node_modules/@types"],
   // Explicit global type libraries required by the project.
   // These correspond to installed devDependencies so editors and tsc can resolve them.
   "types": ["node", "next"],

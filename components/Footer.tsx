@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
 
       {/* Bottom */}
       <div className={styles.bottom}>
-        <p className={styles.copyright}> جميع الحقوق محفوظة 2025 © لدى <Link className={styles.author} target="_blank" href="https://alsaaeid-ellithy.vercel.app">Alsaaeid Ellithy</Link></p>
+        <p className={styles.copyright}> جميع الحقوق محفوظة {new Date().getFullYear()} © لدى منارة الهدى</p>
         <div className={styles.bottomLinks}>
           <Link href="/privacy" className={styles.bottomLink}>سياسة الخصوصية</Link>
           <Link href="/terms" className={styles.bottomLink}>الشروط والأحكام</Link>
