@@ -60,16 +60,6 @@ const BooksCardsWithModal = () => {
 
   const selectedBookInfo = apiBooks.find((b) => b.key === selectedBook);
 
-  const getAvailability = (book) => {
-    const resolvedStatus = availabilityByKey[book?.key];
-    if (resolvedStatus === "partial") {
-      return { label: "متاح جزئي", className: styles.badgePartial };
-    }
-    if (Number(book?.hadithCount || 0) > 0) {
-      return { label: "متاح كامل", className: styles.badgeFull };
-    }
-    return { label: "متاح جزئي", className: styles.badgePartial };
-  };
 
   // -------------------------------
   // LOAD BOOKS
@@ -199,7 +189,6 @@ const BooksCardsWithModal = () => {
         <div className={styles.cardContainer}>
           {apiBooks.filter((book) => !hiddenBookKeys[book.key]).map((book) => {
             const { key, title, hadithCount, subtitle } = book;
-            const availability = getAvailability(book);
             const currentLoaded = loadedCountByKey[key];
             const hasCurrentCount = Number.isFinite(Number(currentLoaded));
             return (
@@ -219,7 +208,6 @@ const BooksCardsWithModal = () => {
                     <span className={styles.countValue}>{hasCurrentCount ? currentLoaded : hadithCount}</span>
                     <span>حديث</span>
                   </div>
-                  <span className={`${styles.badge} ${availability.className}`}>{availability.label}</span>
                 </div>
               </div>
             );
