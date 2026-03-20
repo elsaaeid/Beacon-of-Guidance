@@ -4,7 +4,6 @@ import path from 'path';
 
 const HADITH_BASE = 'https://hadithapi.com/api';
 const HADITH_FALLBACK_BASE = 'https://api.hadith.gading.dev';
-const HADITH_QULAN_API_BASE = 'https://api.quranapi.com/api/v1';
 
 const FALLBACK_BOOK_MAP = {
   'sahih-bukhari': 'bukhari',
@@ -12,16 +11,6 @@ const FALLBACK_BOOK_MAP = {
   'al-tirmidhi': 'tirmidzi',
   'abu-dawood': 'abu-daud',
   'ibn-e-majah': 'ibnu-majah',
-  'sunan-nasai': 'nasai',
-  'musnad-ahmad': 'ahmad',
-};
-
-const QURAN_API_BOOK_MAP = {
-  'sahih-bukhari': 'bukhari',
-  'sahih-muslim': 'muslim',
-  'al-tirmidhi': 'tirmidhi',
-  'abu-dawood': 'abudawud',
-  'ibn-e-majah': 'ibnimaajh',
   'sunan-nasai': 'nasai',
   'musnad-ahmad': 'ahmad',
 };
@@ -93,69 +82,6 @@ async function fetchFallbackHadiths(bookSlug) {
   }
 
   return { hadiths: all, source: 'fallback', available };
-}
-
-async function fetchQuranApiHadiths(bookSlug) {
-  const mapped = QURAN_API_BOOK_MAP[bookSlug];
-  if (!mapped) {
-    return { hadiths: [], source: 'primary', unsupported: true };
-  }
-
-  try {
-    const collectionUrl = `${HADITH_QULAN_API_BASE}/hadiths?apiKey=quran-api-key&language=ar&collection=${mapped}&limit=100&offset=0`;
-    const firstRes = await fetch(collectionUrl);
-    
-    if (!firstRes.ok) {
-      return { hadiths: [], source: 'primary', unsupported: true };
-    }
-
-    const firstJson = await firstRes.json();
-    const hadiths = firstJson?.data?.hadiths || [];
-    
-    if (!hadiths.length) {
-      return { hadiths: [], source: 'quran-api', available: 0 };
-    }
-
-    const normalized = hadiths.map((h) => ({
-      hadithNumber: h.hadithNumber || h.number || h.id,
-      hadithArabic: h.arabicText || h.hadithArabic || h.arab,
-      hadithUrdu: h.urduText || h.hadithUrdu || '',
-      source: 'quran-api',
-    }));
-
-    let total = normalized;
-    const pageSize = 100;
-    let offset = 100;
-
-    // Fetch additional pages if available (limit to 5 pages = 500 hadiths max)
-    while (offset < 500) {
-      const pageUrl = `${HADITH_QULAN_API_BASE}/hadiths?apiKey=quran-api-key&language=ar&collection=${mapped}&limit=100&offset=${offset}`;
-      const pageRes = await fetch(pageUrl);
-      
-      if (!pageRes.ok) break;
-      
-      const pageJson = await pageRes.json();
-      const pageHadiths = pageJson?.data?.hadiths || [];
-      
-      if (!pageHadiths.length) break;
-      
-      const pageNormalized = pageHadiths.map((h) => ({
-        hadithNumber: h.hadithNumber || h.number || h.id,
-        hadithArabic: h.arabicText || h.hadithArabic || h.arab,
-        hadithUrdu: h.urduText || h.hadithUrdu || '',
-        source: 'quran-api',
-      }));
-      
-      total.push(...pageNormalized);
-      offset += pageSize;
-      await sleep(100);
-    }
-
-    return { hadiths: total, source: 'quran-api', available: total.length };
-  } catch (err) {
-    console.log('QuranAPI fetch error:', err.message);
-    return { hadiths: [], source: 'primary', error: true };
-  }
 }
 
 async function readEnvFallback(keyName = 'HADITH_API_KEY') {
@@ -251,23 +177,6 @@ export async function GET(req) {
             );
           }
 
-          // Try third-level fallback (QuranAPI)
-          const quranApiFallback = await fetchQuranApiHadiths(book);
-          if (quranApiFallback.hadiths.length > 0) {
-            return NextResponse.json(
-              {
-                hadiths: quranApiFallback.hadiths,
-                status: 200,
-                all: true,
-                source: quranApiFallback.source,
-                available: quranApiFallback.available,
-                message: 'تم جلب الأحاديث من مصدر QuranAPI البديل.',
-                book,
-              },
-              { status: 200 }
-            );
-          }
-
           return NextResponse.json(
             {
               hadiths: [],
@@ -293,25 +202,6 @@ export async function GET(req) {
                   available: fallback.available,
                   pagesFetched: Math.max(currentPage - 1, 0),
                   message: 'تم التحويل إلى مصدر بديل بسبب الضغط على المصدر الأساسي (429).',
-                  book,
-                },
-                { status: 200 }
-              );
-            }
-
-            // Try third-level fallback (QuranAPI)
-            const quranApiFallback = await fetchQuranApiHadiths(book);
-            if (quranApiFallback.hadiths.length > 0) {
-              return NextResponse.json(
-                {
-                  hadiths: quranApiFallback.hadiths,
-                  all: true,
-                  partial: false,
-                  rateLimited: true,
-                  source: quranApiFallback.source,
-                  available: quranApiFallback.available,
-                  pagesFetched: Math.max(currentPage - 1, 0),
-                  message: 'تم التحويل إلى QuranAPI بسبب الضغط على المصادر الأساسية (429).',
                   book,
                 },
                 { status: 200 }
