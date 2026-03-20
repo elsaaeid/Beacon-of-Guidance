@@ -3,6 +3,45 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/BooksCardsWithModal.module.css";
 import { getBooks, getHadithsByBook } from "../lib/hadithApi";
 
+const BOOK_LOCALIZATION_AR = {
+  "sahih-bukhari": {
+    title: "صحيح البخاري",
+    writer: "الإمام البخاري",
+  },
+  "sahih-muslim": {
+    title: "صحيح مسلم",
+    writer: "الإمام مسلم",
+  },
+  "al-tirmidhi": {
+    title: "جامع الترمذي",
+    writer: "أبو عيسى محمد الترمذي",
+  },
+  "abu-dawood": {
+    title: "سنن أبي داود",
+    writer: "الإمام أبو داود السجستاني",
+  },
+  "ibn-e-majah": {
+    title: "سنن ابن ماجه",
+    writer: "الإمام ابن ماجه القزويني",
+  },
+  "sunan-nasai": {
+    title: "سنن النسائي",
+    writer: "الإمام النسائي",
+  },
+  mishkat: {
+    title: "مشكاة المصابيح",
+    writer: "الإمام الخطيب التبريزي",
+  },
+  "musnad-ahmad": {
+    title: "مسند أحمد",
+    writer: "الإمام أحمد بن حنبل",
+  },
+  "al-silsila-sahiha": {
+    title: "السلسلة الصحيحة",
+    writer: "العلامة محمد ناصر الدين الألباني",
+  },
+};
+
 const BooksCardsWithModal = () => {
   const [selectedBook, setSelectedBook] = useState(null);
 
@@ -17,6 +56,13 @@ const BooksCardsWithModal = () => {
   const closeModal = () => setSelectedBook(null);
 
   const selectedBookInfo = apiBooks.find((b) => b.key === selectedBook);
+
+  const getAvailability = (book) => {
+    if (Number(book?.hadithCount || 0) > 0) {
+      return { label: "متاح كامل", className: styles.badgeFull };
+    }
+    return { label: "غير متاح", className: styles.badgeNone };
+  };
 
   // -------------------------------
   // LOAD BOOKS
@@ -34,9 +80,19 @@ const BooksCardsWithModal = () => {
 
         const mapped = data.map((b) => ({
           key: b.slug || b.bookSlug || String(b.id),
-          title: b.title || "غير معروف",
-          subtitle: b.subtitle || "",
-          hadithCount: b.hadiths_count || 0,
+          slug: b.bookSlug || b.slug || "",
+          title:
+            BOOK_LOCALIZATION_AR[b.bookSlug || b.slug]?.title ||
+            b.title ||
+            b.bookName ||
+            b.name ||
+            "غير معروف",
+          subtitle:
+            BOOK_LOCALIZATION_AR[b.bookSlug || b.slug]?.writer ||
+            b.subtitle ||
+            b.writerName ||
+            "",
+          hadithCount: Number(b.hadiths_count || 0),
         }));
 
         setApiBooks(mapped);
@@ -64,19 +120,31 @@ const BooksCardsWithModal = () => {
       setHadithError(null);
       setHadiths([]);
 
+      if (Number(selectedBookInfo?.hadithCount || 0) === 0) {
+        setHadithError("هذا الكتاب لا يحتوي أحاديث متاحة في المصدر الحالي.");
+        setLoadingHadiths(false);
+        return;
+      }
+
       try {
-        const entries = await getHadithsByBook(selectedBook);
+        const entries = await getHadithsByBook(selectedBook, {
+          expectedCount: Number(selectedBookInfo?.hadithCount || 0),
+          limit: 100,
+        });
         if (!mounted) return;
 
         const cleaned =
           Array.isArray(entries)
             ? entries.map((h) => ({
-                number: h.hadithNumber,
-                text: h.arabic_text || h.hadithArabic || "",
+                number: h.hadithNumber || h.hadith_number || h.id || "-",
+                text: h.arabic_text || h.hadithArabic || h.hadithUrdu || h.hadithEnglish || "لا يوجد نص متاح",
               }))
             : [];
 
         setHadiths(cleaned);
+        if (Number(selectedBookInfo?.hadithCount || 0) > 0 && cleaned.length < Number(selectedBookInfo?.hadithCount || 0)) {
+          setHadithError(`تم تحميل ${cleaned.length} من أصل ${selectedBookInfo.hadithCount} حديث. قد لا تتوفر كل الأحاديث من المصدر الخارجي.`);
+        }
       } catch (err) {
         setHadithError(err?.message || "تعذّر تحميل الأحاديث");
       } finally {
@@ -86,7 +154,7 @@ const BooksCardsWithModal = () => {
 
     loadHadiths();
     return () => (mounted = false);
-  }, [selectedBook]);
+  }, [selectedBook, selectedBookInfo?.hadithCount]);
 
   // -------------------------------
   // RENDER UI
@@ -101,22 +169,27 @@ const BooksCardsWithModal = () => {
         {booksError && <p className={styles.error}>{booksError}</p>}
 
         <div className={styles.cardContainer}>
-          {apiBooks.map(({ key, title, hadithCount, subtitle }) => (
-            <div
-              key={key}
+          {apiBooks.map((book) => {
+            const { key, title, hadithCount, subtitle } = book;
+            const availability = getAvailability(book);
+            return (
+              <div
+                key={key}
               className={styles.card}
               role="button"
               tabIndex={0}
               onClick={() => setSelectedBook(key)}
               onKeyDown={(e) => e.key === "Enter" && setSelectedBook(key)}
-            >
-              <div className={styles.header}>{title}</div>
-              <div className={styles.content}>
-                <h3 className={styles.subtitle}>{subtitle}</h3>
-                <div className={styles.hadithCount}>{hadithCount} حديث</div>
+              >
+                <div className={styles.cardHeader}>{title}</div>
+                <div className={styles.content}>
+                  <h3 className={styles.subtitle}>{subtitle}</h3>
+                  <div className={styles.hadithCount}>{hadithCount} حديث</div>
+                  <span className={`${styles.badge} ${availability.className}`}>{availability.label}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -130,6 +203,9 @@ const BooksCardsWithModal = () => {
             <h2 className={styles.modalTitle}>
               {selectedBookInfo?.title ? `أحاديث ${selectedBookInfo.title}` : "الأحاديث"}
             </h2>
+            {Number(selectedBookInfo?.hadithCount || 0) > 0 && (
+              <p className={styles.subtitle}>المتاح حاليا: {hadiths.length} / {selectedBookInfo.hadithCount}</p>
+            )}
 
             {loadingHadiths && <p className={styles.loading}>⏳ جارٍ تحميل الأحاديث...</p>}
             {hadithError && <p className={styles.error}>{hadithError}</p>}

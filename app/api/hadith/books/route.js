@@ -4,6 +4,17 @@ import path from 'path';
 
 const HADITH_BASE = 'https://hadithapi.com/api';
 
+function extractHadithArray(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (!payload || typeof payload !== 'object') return [];
+  if (Array.isArray(payload.hadiths)) return payload.hadiths;
+  if (Array.isArray(payload.hadith)) return payload.hadith;
+  if (Array.isArray(payload.data)) return payload.data;
+  if (Array.isArray(payload.hadiths?.data)) return payload.hadiths.data;
+  if (Array.isArray(payload.hadith?.data)) return payload.hadith.data;
+  return [];
+}
+
 async function readEnvFallback(keyName = 'HADITH_API_KEY') {
   try {
     const envPath = path.join(process.cwd(), '.env.local');
@@ -47,7 +58,7 @@ export async function GET(req) {
     const limitPerBook = parseInt(searchParams.get('limitPerBook') || '50', 10) || 50;
     const concurrency = parseInt(searchParams.get('concurrency') || '4', 10) || 4;
 
-    let API_KEY = "$2y$10$vq3puvEQg4ihwr7D6gcjUe4y2rPHzZejDAy2goE7lwUufFI51Fpi";
+    let API_KEY = process.env.HADITH_API_KEY || process.env.NEXT_PUBLIC_HADITH_API_KEY;
     if (!API_KEY) {
       API_KEY = await readEnvFallback('HADITH_API_KEY');
     }
@@ -71,7 +82,7 @@ export async function GET(req) {
       return NextResponse.json(books);
     }
 
-    const pickBookId = (b) => b.slug || b.id || b.key || b.book || b.bookSlug || b.name || b.title;
+    const pickBookId = (b) => b.bookSlug || b.slug || b.book || b.key || b.name || b.title || b.id;
 
     const results = [];
     for (let i = 0; i < books.length; i += concurrency) {
@@ -81,7 +92,7 @@ export async function GET(req) {
         try {
           const hadithData = await fetchHadithsForBook(API_KEY, bookId, limitPerBook);
           // Normalize if needed
-          return { ...b, hadiths: Array.isArray(hadithData) ? hadithData : (hadithData.hadiths || hadithData.hadith || []) };
+          return { ...b, hadiths: extractHadithArray(hadithData) };
         } catch (err) {
           console.error('book hadith fetch error', err);
           return { ...b, hadiths: [], _hadithsError: String(err && err.message) };

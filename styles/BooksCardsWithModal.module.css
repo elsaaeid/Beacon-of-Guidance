@@ -43,6 +43,7 @@
   outline: none;
 }
 
+.cardHeader,
 .header {
   color: var(--base-accent);
   padding: 1.5rem 1rem;
@@ -86,6 +87,27 @@
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
+}
+
+.badge {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid transparent;
+}
+
+.badgeFull {
+  background: #e9f8ef;
+  color: #0f7a3d;
+  border-color: #b7e9c9;
+}
+
+.badgeNone {
+  background: #fff1f0;
+  color: #b42318;
+  border-color: #ffd3cf;
 }
 
 /* Modal styles */
