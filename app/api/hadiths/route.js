@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-const HADITH_BASE = 'https://hadithapi.com/api';
-const HADITH_FALLBACK_BASE = 'https://api.hadith.gading.dev';
+const HADITH_BASE = process.env.EGYPTIAN_HADITH_BASE_URL || 'https://hadithapi.com/api';
+const HADITH_FALLBACK_BASE = process.env.EGYPTIAN_HADITH_FALLBACK_URL || 'https://api.hadith.gading.dev';
 
 const FALLBACK_BOOK_MAP = {
   'sahih-bukhari': 'bukhari',
