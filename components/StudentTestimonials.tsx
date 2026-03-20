@@ -1,5 +1,7 @@
 // components/StudentTestimonials.tsx
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import styles from '../styles/StudentTestimonials.module.css'; // Import the CSS module
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
@@ -13,29 +15,7 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "تامر علي",
-    role: "طالب في دورة تحفيظ القرآن",
-    content:
-      `الحمد لله، بفضل المعلمين المتميزين في المركز، تمكنت من حفظ عشرة أجزاء من القرآن الكريم خلال عام واحد فقط. أسلوب التدريس ممتاز والمتابعة مستمرة. أنصح به بشدة.`,
-    stars: 5,
-  },
-  {
-    id: 2,
-    name: "رقية محمد",
-    role: "طالبة في دورة العلوم الشرعية",
-    content:
-      `استفدت كثيراً من دورة العلوم الشرعية، حيث تعلمت أساسيات الفقة والتفسير بطريقة مبسطة وعميقة في نفس الوقت. المعلمون متمكنون من المادة العلمية ويجيبون على جميع الأسئلة بوضوح.`,
-    stars: 5,
-  },
-  {
-    id: 3,
-    name: "احمد حسن",
-    role: "طالب في دورة اللغة العربية",
-    content: `الحمد لله، بفضل المعلمين المتميزين في المركز، تمكنت من تحسين مهاراتي في اللغة العربية بشكل كبير. الدروس تفاعلية وممتعة، وأنصح بها بشدة.`,
-    stars: 5,
-  },
+  // Intentionally empty for now.
 ];
 
 const StarIcon: React.FC<{ filled: boolean }> = ({ filled }) => (
@@ -47,6 +27,13 @@ const StarIcon: React.FC<{ filled: boolean }> = ({ filled }) => (
 );
 
 const StudentTestimonials: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <section id="reviews" className={styles.section} dir="rtl">
       {/* Section Header */}
@@ -59,7 +46,28 @@ const StudentTestimonials: React.FC = () => {
 
       {/* Testimonials Grid */}
       <div className={styles.grid}>
-        {testimonials.map(({ id, name, role,content, stars }) => (
+        {loading &&
+          [1, 2, 3].map((id) => (
+            <div key={id} className={styles.card}>
+              <div className={`${styles.skeletonLine} ${styles.skeletonParagraph}`} />
+              <div className={`${styles.skeletonLine} ${styles.skeletonParagraph}`} />
+              <div className={`${styles.skeletonLine} ${styles.skeletonShort}`} />
+
+              <div className={styles.userInfo}>
+                <div className={styles.skeletonAvatar} />
+                <div className={styles.userDetails}>
+                  <div className={`${styles.skeletonLine} ${styles.skeletonName}`} />
+                  <div className={`${styles.skeletonLine} ${styles.skeletonRole}`} />
+                </div>
+              </div>
+            </div>
+          ))}
+
+        {!loading && testimonials.length === 0 && (
+          <div className={styles.emptyState}>لا توجد آراء طلاب متاحة حالياً.</div>
+        )}
+
+        {!loading && testimonials.map(({ id, name, role, content, stars }) => (
           <div
             key={id}
             className={styles.card}
