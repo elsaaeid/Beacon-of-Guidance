@@ -87,6 +87,50 @@
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
+  direction: rtl;
+}
+
+.countLabel {
+  font-weight: 700;
+}
+
+.countValue {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.availabilityLine {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  align-items: center;
+  direction: rtl;
+  color: var(--gray-color);
+  font-weight: 600;
+}
+
+.loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.loadingIcon {
+  display: inline-block;
+  animation: loadingSpin 1s linear infinite;
+  transform-origin: 50% 55%;
+}
+
+@keyframes loadingSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .badge {
@@ -102,6 +146,12 @@
   background: #e9f8ef;
   color: #0f7a3d;
   border-color: #b7e9c9;
+}
+
+.badgePartial {
+  background: #fff7e6;
+  color: #b26a00;
+  border-color: #ffe1a6;
 }
 
 .badgeNone {

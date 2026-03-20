@@ -3,6 +3,16 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const HADITH_BASE = 'https://hadithapi.com/api';
+const HADITH_FALLBACK_BASE = 'https://api.hadith.gading.dev';
+const FALLBACK_BOOK_MAP = {
+  'sahih-bukhari': 'bukhari',
+  'sahih-muslim': 'muslim',
+  'al-tirmidhi': 'tirmidzi',
+  'abu-dawood': 'abu-daud',
+  'ibn-e-majah': 'ibnu-majah',
+  'sunan-nasai': 'nasai',
+  'musnad-ahmad': 'ahmad',
+};
 
 function extractHadithArray(payload) {
   if (Array.isArray(payload)) return payload;
@@ -13,6 +23,64 @@ function extractHadithArray(payload) {
   if (Array.isArray(payload.hadiths?.data)) return payload.hadiths.data;
   if (Array.isArray(payload.hadith?.data)) return payload.hadith.data;
   return [];
+}
+
+function hasNextPage(payload) {
+  if (!payload || typeof payload !== 'object') return false;
+
+  const container = payload.hadiths && typeof payload.hadiths === 'object' ? payload.hadiths : payload;
+  if (container.next_page_url) return true;
+
+  const currentPage = Number(container.current_page);
+  const lastPage = Number(container.last_page);
+  if (Number.isFinite(currentPage) && Number.isFinite(lastPage)) {
+    return currentPage < lastPage;
+  }
+
+  return false;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchFallbackHadiths(bookSlug) {
+  const mapped = FALLBACK_BOOK_MAP[bookSlug];
+  if (!mapped) {
+    return { hadiths: [], source: 'primary', unsupported: true };
+  }
+
+  const firstRes = await fetch(`${HADITH_FALLBACK_BASE}/books/${mapped}?range=1-1`);
+  if (!firstRes.ok) {
+    return { hadiths: [], source: 'primary', unsupported: true };
+  }
+
+  const firstJson = await firstRes.json();
+  const available = Number(firstJson?.data?.available || 0);
+  if (!available) {
+    return { hadiths: [], source: 'fallback', available: 0 };
+  }
+
+  const chunkSize = 300;
+  const all = [];
+  for (let start = 1; start <= available; start += chunkSize) {
+    const end = Math.min(start + chunkSize - 1, available);
+    const res = await fetch(`${HADITH_FALLBACK_BASE}/books/${mapped}?range=${start}-${end}`);
+    if (!res.ok) break;
+    const json = await res.json();
+    const rows = Array.isArray(json?.data?.hadiths) ? json.data.hadiths : [];
+    if (!rows.length) break;
+    const normalized = rows.map((h) => ({
+      hadithNumber: h.number,
+      hadithArabic: h.arab,
+      hadithUrdu: h.id,
+      source: 'fallback-gading',
+    }));
+    all.push(...normalized);
+    await sleep(120);
+  }
+
+  return { hadiths: all, source: 'fallback', available };
 }
 
 async function readEnvFallback(keyName = 'HADITH_API_KEY') {
@@ -60,7 +128,7 @@ export async function GET(req) {
 
     const requestPage = page || '1';
 
-    const fetchPage = async (pageNo) => {
+    const fetchPage = async (pageNo, attempt = 0) => {
       const url = new URL(`${HADITH_BASE}/hadiths`);
       if (book) url.searchParams.set('book', book);
       url.searchParams.set('page', String(pageNo));
@@ -75,6 +143,12 @@ export async function GET(req) {
       } catch (e) {
         // keep raw text for passthrough responses
       }
+
+      if (res.status === 429 && attempt < 2) {
+        await sleep(350 * (attempt + 1));
+        return fetchPage(pageNo, attempt + 1);
+      }
+
       return { res, text, json };
     };
 
@@ -86,6 +160,22 @@ export async function GET(req) {
         const { res, json } = await fetchPage(currentPage);
 
         if (res.status === 404) {
+          const fallback = await fetchFallbackHadiths(book);
+          if (fallback.hadiths.length > 0) {
+            return NextResponse.json(
+              {
+                hadiths: fallback.hadiths,
+                status: 200,
+                all: true,
+                source: fallback.source,
+                available: fallback.available,
+                message: 'تم جلب الأحاديث من مصدر بديل.',
+                book,
+              },
+              { status: 200 }
+            );
+          }
+
           return NextResponse.json(
             {
               hadiths: [],
@@ -98,6 +188,39 @@ export async function GET(req) {
         }
 
         if (!res.ok) {
+          if (res.status === 429) {
+            const fallback = await fetchFallbackHadiths(book);
+            if (fallback.hadiths.length > 0) {
+              return NextResponse.json(
+                {
+                  hadiths: fallback.hadiths,
+                  all: true,
+                  partial: false,
+                  rateLimited: true,
+                  source: fallback.source,
+                  available: fallback.available,
+                  pagesFetched: Math.max(currentPage - 1, 0),
+                  message: 'تم التحويل إلى مصدر بديل بسبب الضغط على المصدر الأساسي (429).',
+                  book,
+                },
+                { status: 200 }
+              );
+            }
+
+            return NextResponse.json(
+              {
+                hadiths: allHadiths,
+                all: true,
+                partial: true,
+                rateLimited: true,
+                pagesFetched: Math.max(currentPage - 1, 0),
+                message: 'تم إيقاف التحميل بسبب ضغط على المصدر الخارجي (429).',
+                book,
+              },
+              { status: 200 }
+            );
+          }
+
           return NextResponse.json(
             {
               error: (json && (json.message || json.error)) || `Upstream error: ${res.status} ${res.statusText}`,
@@ -113,7 +236,7 @@ export async function GET(req) {
         }
 
         allHadiths.push(...chunk);
-        if (chunk.length < pageLimit) {
+        if (!hasNextPage(json)) {
           break;
         }
         currentPage += 1;

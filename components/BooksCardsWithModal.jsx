@@ -52,16 +52,23 @@ const BooksCardsWithModal = () => {
   const [hadiths, setHadiths] = useState([]);
   const [loadingHadiths, setLoadingHadiths] = useState(false);
   const [hadithError, setHadithError] = useState(null);
+  const [availabilityByKey, setAvailabilityByKey] = useState({});
+  const [loadedCountByKey, setLoadedCountByKey] = useState({});
+  const [hiddenBookKeys, setHiddenBookKeys] = useState({});
 
   const closeModal = () => setSelectedBook(null);
 
   const selectedBookInfo = apiBooks.find((b) => b.key === selectedBook);
 
   const getAvailability = (book) => {
+    const resolvedStatus = availabilityByKey[book?.key];
+    if (resolvedStatus === "partial") {
+      return { label: "متاح جزئي", className: styles.badgePartial };
+    }
     if (Number(book?.hadithCount || 0) > 0) {
       return { label: "متاح كامل", className: styles.badgeFull };
     }
-    return { label: "غير متاح", className: styles.badgeNone };
+    return { label: "متاح جزئي", className: styles.badgePartial };
   };
 
   // -------------------------------
@@ -120,18 +127,14 @@ const BooksCardsWithModal = () => {
       setHadithError(null);
       setHadiths([]);
 
-      if (Number(selectedBookInfo?.hadithCount || 0) === 0) {
-        setHadithError("هذا الكتاب لا يحتوي أحاديث متاحة في المصدر الحالي.");
-        setLoadingHadiths(false);
-        return;
-      }
-
       try {
-        const entries = await getHadithsByBook(selectedBook, {
+        const result = await getHadithsByBook(selectedBook, {
           expectedCount: Number(selectedBookInfo?.hadithCount || 0),
           limit: 100,
         });
         if (!mounted) return;
+
+        const entries = Array.isArray(result) ? result : (result?.hadiths || []);
 
         const cleaned =
           Array.isArray(entries)
@@ -141,11 +144,31 @@ const BooksCardsWithModal = () => {
               }))
             : [];
 
+        if (cleaned.length === 0) {
+          setHiddenBookKeys((prev) => ({ ...prev, [selectedBook]: true }));
+          setSelectedBook(null);
+          return;
+        }
+
         setHadiths(cleaned);
+        const expectedCount = Number(selectedBookInfo?.hadithCount || 0);
+        setLoadedCountByKey((prev) => ({ ...prev, [selectedBook]: cleaned.length }));
+        const resolvedStatus = expectedCount > 0 && cleaned.length >= expectedCount ? "full" : "partial";
+        setAvailabilityByKey((prev) => ({ ...prev, [selectedBook]: resolvedStatus }));
+
         if (Number(selectedBookInfo?.hadithCount || 0) > 0 && cleaned.length < Number(selectedBookInfo?.hadithCount || 0)) {
           setHadithError(`تم تحميل ${cleaned.length} من أصل ${selectedBookInfo.hadithCount} حديث. قد لا تتوفر كل الأحاديث من المصدر الخارجي.`);
+        } else if (Number(selectedBookInfo?.hadithCount || 0) === 0 && cleaned.length === 0) {
+          if (result?.source === "fallback") {
+            setHadithError("لم يتم العثور على أحاديث لهذا الكتاب حتى بعد البحث في المصدر البديل.");
+          } else {
+            setHadithError(result?.message || "لم يتم العثور على أحاديث في الاستجابة الحالية لهذا الكتاب.");
+          }
+        } else if (result?.rateLimited) {
+          setHadithError("تم التحميل مع وجود ضغط على المصدر الأساسي؛ تم استخدام نتائج متاحة حاليًا.");
         }
       } catch (err) {
+        setAvailabilityByKey((prev) => ({ ...prev, [selectedBook]: "partial" }));
         setHadithError(err?.message || "تعذّر تحميل الأحاديث");
       } finally {
         setLoadingHadiths(false);
@@ -165,13 +188,20 @@ const BooksCardsWithModal = () => {
         <h2 className={styles.title}>كتب الحديث النبوي الشريف</h2>
         <p className={styles.description}>استمتع بقراءة مجموعة من الأحاديث النبوية الشريفة</p>
 
-        {loadingBooks && <p className={styles.loading}>⏳ جاري تحميل الكتب...</p>}
+        {loadingBooks && (
+          <p className={styles.loading}>
+            <span className={styles.loadingIcon} aria-hidden="true">⏳</span>
+            جاري تحميل الكتب...
+          </p>
+        )}
         {booksError && <p className={styles.error}>{booksError}</p>}
 
         <div className={styles.cardContainer}>
-          {apiBooks.map((book) => {
+          {apiBooks.filter((book) => !hiddenBookKeys[book.key]).map((book) => {
             const { key, title, hadithCount, subtitle } = book;
             const availability = getAvailability(book);
+            const currentLoaded = loadedCountByKey[key];
+            const hasCurrentCount = Number.isFinite(Number(currentLoaded));
             return (
               <div
                 key={key}
@@ -184,7 +214,11 @@ const BooksCardsWithModal = () => {
                 <div className={styles.cardHeader}>{title}</div>
                 <div className={styles.content}>
                   <h3 className={styles.subtitle}>{subtitle}</h3>
-                  <div className={styles.hadithCount}>{hadithCount} حديث</div>
+                  <div className={styles.hadithCount}>
+                    <span className={styles.countLabel}>{hasCurrentCount ? "المتاح حاليا:" : "الإجمالي:"}</span>
+                    <span className={styles.countValue}>{hasCurrentCount ? currentLoaded : hadithCount}</span>
+                    <span>حديث</span>
+                  </div>
                   <span className={`${styles.badge} ${availability.className}`}>{availability.label}</span>
                 </div>
               </div>
@@ -204,10 +238,18 @@ const BooksCardsWithModal = () => {
               {selectedBookInfo?.title ? `أحاديث ${selectedBookInfo.title}` : "الأحاديث"}
             </h2>
             {Number(selectedBookInfo?.hadithCount || 0) > 0 && (
-              <p className={styles.subtitle}>المتاح حاليا: {hadiths.length} / {selectedBookInfo.hadithCount}</p>
+              <p className={styles.availabilityLine}>
+                <span className={styles.countLabel}>المتاح حاليا:</span>
+                <span className={styles.countValue}>{hadiths.length} / {selectedBookInfo.hadithCount}</span>
+              </p>
             )}
 
-            {loadingHadiths && <p className={styles.loading}>⏳ جارٍ تحميل الأحاديث...</p>}
+            {loadingHadiths && (
+              <p className={styles.loading}>
+                <span className={styles.loadingIcon} aria-hidden="true">⏳</span>
+                جارٍ تحميل الأحاديث...
+              </p>
+            )}
             {hadithError && <p className={styles.error}>{hadithError}</p>}
 
             {hadiths.length > 0 ? (
