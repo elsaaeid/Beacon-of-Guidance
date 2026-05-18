@@ -89,7 +89,7 @@ const BooksCardsWithModal = () => {
             b.subtitle ||
             b.writerName ||
             "",
-          hadithCount: Number(b.hadiths_count || 0),
+          hadithCount: b.hadiths_count == null ? null : Number(b.hadiths_count),
         }));
 
         setApiBooks(mapped);
@@ -187,11 +187,13 @@ const BooksCardsWithModal = () => {
         {booksError && <p className={styles.error}>{booksError}</p>}
 
         <div className={styles.cardContainer}>
-          {apiBooks.filter((book) => !hiddenBookKeys[book.key]).map((book) => {
-            const { key, title, hadithCount, subtitle } = book;
-            const currentLoaded = loadedCountByKey[key];
-            const hasCurrentCount = Number.isFinite(Number(currentLoaded));
-            return (
+          {apiBooks
+            .filter((book) => !hiddenBookKeys[book.key] && book.hadithCount != null && book.hadithCount > 0)
+            .map((book) => {
+              const { key, title, hadithCount, subtitle } = book;
+              const currentLoaded = loadedCountByKey[key];
+              const hasCurrentCount = Number.isFinite(Number(currentLoaded));
+              return (
               <div
                 key={key}
               className={styles.card}
