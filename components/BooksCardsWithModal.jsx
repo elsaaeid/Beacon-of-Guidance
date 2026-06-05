@@ -220,27 +220,30 @@ const BooksCardsWithModal = () => {
       {selectedBook && (
         <div className={styles.modalOverlay} onClick={closeModal} role="dialog" aria-modal="true">
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button onClick={closeModal} className={styles.modalCloseBtn}>
-              &times;
-            </button>
+            <div className={styles.modalHeader}>
+              <button onClick={closeModal} className={styles.modalCloseBtn}>
+                &times;
+              </button>
 
-            <h2 className={styles.modalTitle}>
-              {selectedBookInfo?.title ? `أحاديث ${selectedBookInfo.title}` : "الأحاديث"}
-            </h2>
-            {Number(selectedBookInfo?.hadithCount || 0) > 0 && (
-              <p className={styles.availabilityLine}>
-                <span className={styles.countLabel}>المتاح حاليا:</span>
-                <span className={styles.countValue}>{hadiths.length} / {selectedBookInfo.hadithCount}</span>
-              </p>
-            )}
+              <h2 className={styles.modalTitle}>
+                {selectedBookInfo?.title ? `أحاديث ${selectedBookInfo.title}` : "الأحاديث"}
+              </h2>
 
-            {loadingHadiths && (
-              <p className={styles.loading}>
-                <span className={styles.loadingIcon} aria-hidden="true">⏳</span>
-                جارٍ تحميل الأحاديث...
-              </p>
-            )}
+              {Number(selectedBookInfo?.hadithCount || 0) > 0 && (
+                <p className={styles.availabilityLine}>
+                  <span className={styles.countLabel}>المتاح حاليا:</span>
+                  <span className={styles.countValue}>{hadiths.length} / {selectedBookInfo.hadithCount}</span>
+                </p>
+              )}
+
+              {loadingHadiths && (
+                <p className={styles.loading}>
+                  <span className={styles.loadingIcon} aria-hidden="true">⏳</span>
+                  جارٍ تحميل الأحاديث...
+                </p>
+              )}
             {hadithError && <p className={styles.error}>{hadithError}</p>}
+            </div>
 
             {hadiths.length > 0 ? (
               <ul className={styles.hadithList}>
