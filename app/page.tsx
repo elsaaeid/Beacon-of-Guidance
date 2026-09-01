@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import ShariahStudies from "@/components/ShariahStudies";
-import StudentTestimonials from "@/components/StudentTestimonials";
+// import StudentTestimonials from "@/components/StudentTestimonials";
 import TeachersSection from "@/components/TeachersSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import CookieBanner from '@/components/CookieBanner';
@@ -22,7 +22,7 @@ export default function Home() {
       <TeachersSection />
       <BooksCardsWithModal />
       <EducationalArticles />
-      <StudentTestimonials />
+      {/* <StudentTestimonials /> */}
       <Footer />
     </div>
   );
