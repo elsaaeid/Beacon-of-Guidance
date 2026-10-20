@@ -63,9 +63,9 @@ const Navbar: React.FC = () => {
           <li>
             <a href="#books" className={`${styles.navItem} ${isActive('#books') ? styles.active : ''}`}>الأحاديث</a>
           </li>
-          <li>
+          {/* <li>
             <a href="#reviews" className={`${styles.navItem} ${isActive('#reviews') ? styles.active : ''}`}>التقييمات</a>
-          </li>
+          </li> */}
         </ul>
 
         {/* Left Side - Register Button and Icon */}
