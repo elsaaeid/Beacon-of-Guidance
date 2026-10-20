@@ -10,7 +10,7 @@ const WhyChooseUs: React.FC = () => {
       <div className={styles.container}>
         <h2 className={styles.title}>لماذا تختارنا؟</h2>
         <p className={styles.subtitle}>
-          نقدم تجربة تعليمية متكاملة تجمع بين الأصالة والمعاصرة. مع التركيز على الجودة والإتقان
+          نقدم تجربة تعليمية متكاملة تجمع بين الأصالة والمعاصرة مع التركيز على الجودة والإتقان
         </p>
 
         <div className={styles.cardsContainer}>
